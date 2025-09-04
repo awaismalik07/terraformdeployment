@@ -1,1 +1,13 @@
-test
+name: Terraform Deployment
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    deployment:
+        runs-on: ubuntu-latest
+        
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@v4 
