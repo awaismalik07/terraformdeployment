@@ -21,5 +21,8 @@ jobs:
             -   name: Initializing terraform
                 run: terraform init
             
+            -   name: Select Workspace
+                run: terraform workspace select test
+            
             -   name: Apply Terraform
                 run: terraform apply -var-file=config/test.tfvars -auto-approve

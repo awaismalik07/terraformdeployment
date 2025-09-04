@@ -13,7 +13,7 @@ data "aws_availability_zones" "AZs" {
 resource "aws_vpc" "AwaisVpc" {
     cidr_block = var.vpc-cidr
     tags = {
-        Name = "${var.owner}-Vpc"
+        Name = "${var.owner}-${terraform.workspace}-Vpc"
     }
 }
 
