@@ -2,7 +2,7 @@
 
 #Create a secret to store the credentials
 resource "aws_secretsmanager_secret" "rds_secret" {
-  name = "${var.owner}-${terraform.workspace}-RDS_Secret"
+  name = "${var.owner}-${terraform.workspace}-db_Secret"
   
   description = "Secret to store RDS Credentials"
 }
