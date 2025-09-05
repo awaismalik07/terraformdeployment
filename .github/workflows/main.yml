@@ -5,20 +5,37 @@ on:
         branches: [main]
 
 jobs:
-    deployment:
-        runs-on: self-hosted
+    build-runner:
+        runs-on: ubuntu-latest
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
+            
+            -   name: Change Directory
+                run: cd runner-setup
             
             -   name: Install Terraform
                 uses: hashicorp/setup-terraform@v3
             
             -   name: Initializing terraform
                 run: terraform init
-            
-            -   name: Select Test Workspace
-                run: terraform workspace select test
-            
+                
             -   name: Apply Terraform
-                run: terraform apply -var-file=config/test.tfvars -auto-approve
+                run: terraform apply 
+    #deployment:
+    #    runs-on: self-hosted
+    #    steps:
+    #        -   name: Checkout Repository
+    #            uses: actions/checkout@v4
+    #        
+    #        -   name: Install Terraform
+    #            uses: hashicorp/setup-terraform@v3
+    #        
+    #        -   name: Initializing terraform
+    #            run: terraform init
+    #        
+    #        -   name: Select Test Workspace
+    #            run: terraform workspace select test
+    #        
+    #        -   name: Apply Terraform
+    #            run: terraform apply -var-file=config/test.tfvars -auto-approve
