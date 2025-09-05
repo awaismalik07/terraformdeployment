@@ -12,20 +12,19 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         steps:
-            -   name: Checkout Repository
-                uses: actions/checkout@v4
+          - name: Checkout Repository
+            uses: actions/checkout@v4
             
-            -   name: Change Directory
-                run: cd runner-setup
+          - name: Install Terraform
+            uses: hashicorp/setup-terraform@v3
             
-            -   name: Install Terraform
-                uses: hashicorp/setup-terraform@v3
+          - name: Terraform Init
+            working-directory: ./runner-setup
+            run: terraform init
             
-            -   name: Initializing terraform
-                run: terraform init
-
-            -   name: Apply Terraform
-                run: terraform apply -auto-approve
+          - name: Terraform Apply
+            working-directory: ./runner-setup
+            run: terraform apply -auto-approve
     #deployment:
     #    runs-on: self-hosted
     #    steps:
