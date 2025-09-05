@@ -54,18 +54,18 @@ module "ec2" {
 
 }
 
-module "cloudwatch" {
-  source              = "./modules/cloudwatch"
-  owner               = var.environment.owner
-  vpc_id              = module.vpc.vpc_id
-
-  asg_name            = module.ec2.asg_name
-
-  scaleInAdjustment   = var.scaling.scale_in_adjustment     #specify no of instances to remove
-  scaleOutAdjustment  = var.scaling.scale_out_adjustment     #specify no of instances to add
-  highthreshold       = var.scaling.high_threshold       #CPU high threshold
-  lowthreshold        = var.scaling.low_threshold        #CPU low threshold
-}
+#module "cloudwatch" {
+#  source              = "./modules/cloudwatch"
+#  owner               = var.environment.owner
+#  vpc_id              = module.vpc.vpc_id
+#
+#  asg_name            = module.ec2.asg_name
+#
+#  scaleInAdjustment   = var.scaling.scale_in_adjustment     #specify no of instances to remove
+#  scaleOutAdjustment  = var.scaling.scale_out_adjustment     #specify no of instances to add
+#  highthreshold       = var.scaling.high_threshold       #CPU high threshold
+#  lowthreshold        = var.scaling.low_threshold        #CPU low threshold
+#}
 
 module "route53" {
   source    = "./modules/route53"
