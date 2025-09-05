@@ -206,13 +206,24 @@ resource "aws_instance" "awais_runner_ec2" {
               #!/bin/bash
               apt-get update -y
               apt-get install -y curl unzip zip jq git
-              mkdir actions-runner && cd actions-runner
-              curl -o actions-runner-linux-x64-2.328.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.328.0/actions-runner-linux-x64-2.328.0.tar.gz
-              echo "01066fad3a2893e63e6ca880ae3a1fad5bf9329d60e77ee15f2b97c148c3cd4e  actions-runner-linux-x64-2.328.0.tar.gz" | shasum -a 256 -c
-              tar xzf ./actions-runner-linux-x64-2.328.0.tar.gz
-              ./config.sh --url https://github.com/awaismalik07/terraformdeployment --token BGYULLKH7X3GR4RL4MKIRQTIXNYKQ
-              ./run.sh
+
+              # Create runner dir
+              mkdir -p /home/ubuntu/actions-runner && cd /home/ubuntu/actions-runner
+              curl -o actions-runner-linux-x64-2.308.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.308.0/actions-runner-linux-x64-2.308.0.tar.gz
+              tar xzf ./actions-runner-linux-x64-2.308.0.tar.gz
+
+              # Get GitHub registration token
+              GH_TOKEN="YOUR_GH_PAT"   # store this in GitHub Secrets and inject via TF
+              REG_TOKEN=$(curl -sX POST -H "Authorization: token $GH_TOKEN" \
+                https://api.github.com/repos/awaismalik07/terraformdeployment/actions/runners/registration-token | jq -r .token)
+
+              ./config.sh --url https://github.com/awaismalik07/terraformdeployment \
+                          --token $REG_TOKEN --unattended --replace
+
+              ./svc.sh install
+              ./svc.sh start
               EOF
+
 
   tags = {
     Name = "awais-runner-ec2"
