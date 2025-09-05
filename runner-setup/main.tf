@@ -203,26 +203,31 @@ resource "aws_instance" "awais_runner_ec2" {
   iam_instance_profile = aws_iam_instance_profile.awais_runner_instance_profile.name
 
   user_data = <<-EOF
-              #!/bin/bash
-              apt-get update -y
-              apt-get install -y curl unzip zip jq git
+            #!/bin/bash
 
-              # Create runner dir
-              mkdir -p /home/ubuntu/actions-runner && cd /home/ubuntu/actions-runner
-              curl -o actions-runner-linux-x64-2.308.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.308.0/actions-runner-linux-x64-2.308.0.tar.gz
-              tar xzf ./actions-runner-linux-x64-2.308.0.tar.gz
+            # Install dependencies
+            apt-get update -y
+            apt-get install -y curl unzip zip jq git
 
-              # Get GitHub registration token
-              GH_TOKEN="YOUR_GH_PAT"   # store this in GitHub Secrets and inject via TF
-              REG_TOKEN=$(curl -sX POST -H "Authorization: token $GH_TOKEN" \
-                https://api.github.com/repos/awaismalik07/terraformdeployment/actions/runners/registration-token | jq -r .token)
+            # Create runner directory owned by ubuntu
+            mkdir -p /home/ubuntu/actions-runner
+            cd /home/ubuntu/actions-runner
+            curl -o actions-runner-linux-x64-2.308.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.308.0/actions-runner-linux-x64-2.308.0.tar.gz
+            tar xzf ./actions-runner-linux-x64-2.308.0.tar.gz
+            chown -R ubuntu:ubuntu /home/ubuntu/actions-runner
 
-              ./config.sh --url https://github.com/awaismalik07/terraformdeployment \
-                          --token $REG_TOKEN --unattended --replace
+            # Run config as ubuntu user
+            sudo -u ubuntu /home/ubuntu/actions-runner/config.sh --unattended \
+              --url https://github.com/awaismalik07/terraformdeployment \
+              --token BGYULLOPGV55HMNRVIGV5OLIXN6CI \
+              --labels ec2,self-hosted \
+              --name ec2-runner-$(hostname)
 
-              ./svc.sh install
-              ./svc.sh start
-              EOF
+            # Install and start as service
+            /home/ubuntu/actions-runner/svc.sh install
+            /home/ubuntu/actions-runner/svc.sh start
+            EOF
+
 
 
   tags = {
