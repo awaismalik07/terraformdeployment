@@ -209,6 +209,10 @@ resource "aws_instance" "awais_runner_ec2" {
             apt-get update -y
             apt-get install -y curl unzip zip jq git
 
+            curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+            apt-get install -y nodejs
+
+
             # Create runner directory owned by ubuntu
             mkdir -p /home/ubuntu/actions-runner
             cd /home/ubuntu/actions-runner
