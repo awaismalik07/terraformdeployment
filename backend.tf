@@ -6,7 +6,7 @@ terraform {
     bucket         = "awais-terraform-state-bucket"
     key            = "global/terraform.tfstate"     
     region         = "us-east-1"           
-    dynamodb_table = "terraform-locks"                
+    dynamodb_table = "awais-terra-locks"                
     encrypt        = true                     
   }
 }

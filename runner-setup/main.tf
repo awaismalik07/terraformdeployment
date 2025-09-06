@@ -15,7 +15,7 @@ terraform {
     bucket         = "awais-terraform-state-bucket"
     key            = "runner/terraform.tfstate"     
     region         = "us-east-1"           
-    dynamodb_table = "terraform-locks"                
+    dynamodb_table = "awais-runner-locks"                
     encrypt        = true                     
   }
 }
@@ -223,7 +223,7 @@ resource "aws_instance" "awais_runner_ec2" {
             # Run config as ubuntu user
             sudo -u ubuntu /home/ubuntu/actions-runner/config.sh --unattended \
               --url https://github.com/awaismalik07/terraformdeployment \
-              --token BGYULLOPGV55HMNRVIGV5OLIXN6CI \
+              --token BGYULLL4ZUGXDKY5XLZUGCLIXOFRU \
               --labels ec2,self-hosted \
               --name ec2-runner-$(hostname)
 
