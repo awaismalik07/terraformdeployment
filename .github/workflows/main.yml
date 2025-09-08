@@ -91,7 +91,7 @@ jobs:
                 run: terraform init
             
             -   name: Select Test Workspace
-                run: terraform workspace select test
+                run: terraform workspace select -or-create test
 
             -   name: Terraform Plan
                 run: terraform plan -var-file=config/test.tfvars
@@ -114,7 +114,7 @@ jobs:
                 run: terraform init
             
             -   name: Select Test Workspace
-                run: terraform workspace select test
+                run: terraform workspace select -or-create test
 
             -   name: Terraform Plan
                 run: terraform plan -var-file=config/test.tfvars
