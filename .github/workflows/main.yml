@@ -73,6 +73,17 @@ jobs:
             -   name: Initializing terraform
                 run: terraform init
 
+            -   name: Slack Notification
+                if: always()
+                uses: slackapi/slack-github-action@v1.27.0
+                with:
+                  payload: |
+                    {
+                      "text": "Job *Init* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}* on branch `${{ github.ref_name }}`"
+                    }
+                env:
+                  SLACK_WEBHOOK_URL: ${{ secrets.Slack_Url }}
+
     Plan-Terraform:
         runs-on: ubuntu-latest
         if: ${{ github.event.inputs.SelectStep == 'Plan' }}
@@ -95,6 +106,17 @@ jobs:
 
             -   name: Terraform Plan
                 run: terraform plan -var-file=config/test.tfvars
+
+            -   name: Slack Notification
+                if: always()
+                uses: slackapi/slack-github-action@v1.27.0
+                with:
+                  payload: |
+                    {
+                      "text": "Job *Plan* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}* on branch `${{ github.ref_name }}`"
+                    }
+                env:
+                  SLACK_WEBHOOK_URL: ${{ secrets.Slack_Url }}
 
     Apply-Terraform:
         runs-on: ubuntu-latest
@@ -121,3 +143,15 @@ jobs:
             
             -   name: Terraform Apply
                 run: terraform apply -var-file=config/test.tfvars -auto-approve
+
+            -   name: Slack Notification
+                if: always()
+                uses: slackapi/slack-github-action@v1.27.0
+                with:
+                  payload: |
+                    {
+                      "text": "Job *Apply* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}* on branch `${{ github.ref_name }}`"
+                    }
+                env:
+                  SLACK_WEBHOOK_URL: ${{ secrets.Slack_Url }}
+    
