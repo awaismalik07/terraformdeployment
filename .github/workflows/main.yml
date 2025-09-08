@@ -41,5 +41,5 @@ jobs:
             -   name: Select Test Workspace
                 run: terraform workspace select test
             
-            -   name: Apply Terraform
+            -   name: Terraform Apply
                 run: terraform apply -var-file=config/test.tfvars -auto-approve
