@@ -13,8 +13,8 @@ on:
                     - Apply
                 required: true
             
-    push:
-        branches: [main]
+    #push:
+    #    branches: [main]
 
 jobs:
 #    build-runner:
