@@ -79,7 +79,7 @@ jobs:
                 with:
                   payload: |
                     {
-                      "text": "Job *Init* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}* on branch `${{ github.ref_name }}`"
+                      "text": "🚀 Job *${{ github.job }}* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}*\n🔀 Branch: `${{ github.ref_name }}`\n👤 Actor: *${{ github.actor }}*\n📦 Repo: `${{ github.repository }}`\n📝 Commit: `${{ github.sha }}`"
                     }
                 env:
                   SLACK_WEBHOOK_URL: ${{ secrets.Slack_Url }}
@@ -113,7 +113,7 @@ jobs:
                 with:
                   payload: |
                     {
-                      "text": "Job *Plan* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}* on branch `${{ github.ref_name }}`"
+                      "text": "🚀 Job *${{ github.job }}* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}*\n🔀 Branch: `${{ github.ref_name }}`\n👤 Actor: *${{ github.actor }}*\n📦 Repo: `${{ github.repository }}`\n📝 Commit: `${{ github.sha }}`"
                     }
                 env:
                   SLACK_WEBHOOK_URL: ${{ secrets.Slack_Url }}
@@ -150,7 +150,7 @@ jobs:
                 with:
                   payload: |
                     {
-                      "text": "Job *Apply* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}* on branch `${{ github.ref_name }}`"
+                      "text": "🚀 Job *${{ github.job }}* in workflow *${{ github.workflow }}* finished with status: *${{ job.status }}*\n🔀 Branch: `${{ github.ref_name }}`\n👤 Actor: *${{ github.actor }}*\n📦 Repo: `${{ github.repository }}`\n📝 Commit: `${{ github.sha }}`"
                     }
                 env:
                   SLACK_WEBHOOK_URL: ${{ secrets.Slack_Url }}
